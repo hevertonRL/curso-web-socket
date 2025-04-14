@@ -4,6 +4,15 @@ import http from "http";
 const app = express();
 const server = http.Server();
 
+const io = socketio(server);
+
+io.on('connect', (socket) => {
+    socket.on('teste', (res) => {
+        console.log(res);
+    })
+})
+
+
 app.get('/', (req, res) => {
     res.json({status: true});
 });
