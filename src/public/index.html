@@ -13,13 +13,37 @@
         socket.on('teste', (res) => {
             console.log(res);
         });
+        
+        function enviar(){
+            const usuario  = document.querySelector("#usuario").value;
+            const mensagem =  document.querySelector("#mensagem").value;
+            socket.emit('teste', usuario, mensagem );
 
-        function send(){
-            socket.emit('teste', 'teste de conexão')
+            escreverMensagemEmTela('EU', mensagem);
         }
+
+        function escreverMensagemEmTela(usuario, mensagem){
+            let mensagensHtml = document.querySelector("#mensagens").innerHTML;
+
+            mensagensHtml += `<p><strong>${usuario}</strong> - ${mensagem}</p>`;
+            
+            document.querySelector("#mensagens").innerHTML = mensagensHtml;
+        }
+
+        
     </script>
 </head>
 <body>
-    <h1>hello world</h1>
+    <h1>Hello World</h1>
+    <hr>
+    <input type="text" name="usuario" id="usuario" placeholder="Informar o usuário">
+    <hr>
+    <textarea name="mensagem" id="mensagem"></textarea>
+    <hr>
+    <button onclick="enviar()">Enviar</button>
+    <hr>
+    <h3>Mensagens do Servidor</h3>
+    <hr>
+    <div id="mensagens"></div>
 </body>
 </html>

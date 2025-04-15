@@ -18,6 +18,8 @@ io.on('connect', (socket) => {
 
     socket.on('teste', (res) => {
         console.log('MENSAGEM RECEBIDA', res);
+
+        io.to(socket).emit(res);
     });
 });
 
