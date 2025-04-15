@@ -1,20 +1,25 @@
 import express from "express";
 import http from "http";
+import socketio from "socket.io";
 
 const app = express();
-const server = http.Server();
+const server = http.Server(app);
+
+app.use(express.static(__dirname + '/public'));
 
 const io = socketio(server);
 
 io.on('connect', (socket) => {
-    socket.on('teste', (res) => {
-        console.log(res);
-    })
-})
+    
+    io.to(socket.id).emit({status: true, message: 'Conexão estabelecida com o servidor!'})
 
+    socket.on('teste', (res) => {
+        console.log('MENSAGEM RECEBIDA', res);
+    });
+});
 
 app.get('/', (req, res) => {
-    res.json({status: true});
+    res.render('index.html');
 });
 
 app.get('/teste', (req, res) => {
@@ -22,5 +27,5 @@ app.get('/teste', (req, res) => {
 });
 
 server.listen(3333, () => {
-    console.log("SERVIDOR INICIADO PORTA", 3333)
-});
+     console.log("SERVIDOR INICIADO PORTA", 3333)
+ });
