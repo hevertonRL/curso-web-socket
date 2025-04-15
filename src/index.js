@@ -11,7 +11,10 @@ const io = socketio(server);
 
 io.on('connect', (socket) => {
     
-    io.to(socket.id).emit({status: true, message: 'Conexão estabelecida com o servidor!'})
+    io.to(socket).emit({
+        status: true, 
+        message: 'Conexão estabelecida com o servidor!'
+    });
 
     socket.on('teste', (res) => {
         console.log('MENSAGEM RECEBIDA', res);
