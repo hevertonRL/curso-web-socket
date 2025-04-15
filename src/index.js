@@ -11,15 +11,16 @@ const io = socketio(server);
 
 io.on('connect', (socket) => {
     
-    io.to(socket).emit({
+    io.to(socket.id).emit({
         status: true, 
         message: 'Conexão estabelecida com o servidor!'
     });
 
     socket.on('teste', (res) => {
-        console.log('MENSAGEM RECEBIDA', res);
+        console.log('MENSAGEM RECEBIDA', res.usuario);
 
-        io.to(socket).emit(res);
+        // io.to(socket).emit(res);
+        socket.broadcast.emit('teste', res);
     });
 });
 
